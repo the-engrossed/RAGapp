@@ -24,7 +24,7 @@ from langchain.chains import RetrievalQA
 
 #BedRock Client
 bedrock = boto3.client(service_name="bedrock-runtime")
-bedrock_embedding = BedrockEmbeddings(model_id ="amazon.titan-text-express-v1", client=bedrock)
+bedrock_embedding = BedrockEmbeddings(model_id ="amazon.titan-embed-text-v1", client=bedrock)
 
 #Data ingestion
 def data_ingestion():
@@ -46,11 +46,7 @@ def get_vectorstore(docs):
     )
     vectorstore_faiss.save_local("faiss_index")
 
-def get_claude_llm():
-    #create anthropic model
-    llm = Bedrock(model_id ="ai21.j2-mid-v1",client=bedrock,
-                  model_kwargs={'maxTokens':512})
-    return llm
+
 
 def get_llama2_llm():
     #create anthropic model
@@ -102,14 +98,6 @@ def main():
                 get_vectorstore(docs)
                 st.success("Done")
 
-    if st.button("Claude Output"):
-        with st.spinner("Processing..."):
-            faiss_index = FAISS.load_local("faiss_index", bedrock_embedding)
-            llm=get_claude_llm()
-            
-            #faiss_index = get_vector_store(docs)
-            st.write(get_response_llm(llm,faiss_index,user_question))
-            st.success("Done")
 
     if st.button("Llama2 Output"):
         with st.spinner("Processing..."):

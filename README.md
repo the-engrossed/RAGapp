@@ -1,2 +1,3 @@
-# RAGapp
-An Application that gives you information on algorithms using LLM's. 
+# RAG application using AWS Bedrock and Langchain
+
+## Tools Used - Aws Bedrock, Python, Langchain, Streamlit
